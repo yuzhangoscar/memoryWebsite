@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import Task
+from .models import Post
 
 # Register your models here.
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
-	list_display = ('task', 'studied_date', 'first_review_date')
-	list_filter = ('task', 'studied_date')
-	search_fields = ('task', 'studied_date')
-	date_hierarchy = 'studied_date'
-	ordering = ('task', 'studied_date')
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+	list_display = ('title', 'slug', 'author', 'publish', 'status')
+	list_filter = ('status', 'created', 'publish', 'author')
+	search_fields = ('title', 'body')
+	prepopulated_fields = {'slug': ('title',)}
+	raw_id_fields = ('author',)
+	date_hierarchy = 'publish'

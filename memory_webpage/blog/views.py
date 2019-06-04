@@ -1,23 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Post
 
-posts = [
-    {
-        'author': 'YZ',
-        'title': 'First post',
-        'content': 'R18'
-    },
-    {
-        'author': 'YZ 2.0',
-        'title': 'Second post',
-        'content': 'content is hot'
-    }
-]
-
-def home(request):
+def post_list(request):
+	posts = Post.published.all()
 	context = {
 	    'posts': posts
 	}
-	return render(request, 'blog/home.html', context)
+	return render(request, 'blog/post/list.html', context)
 
 def about(request):
 	return render(request, 'blog/about.html', {'title':'about about'})
+
+def post_detail(request, year, month, day, post):
+	post = get_object_or_404(Post, slug=post,
+		status='published',
+		publish__year=year,
+		publish__month=month,
+		publish__day=day)
+	return render(request, 'blog/post/detail.html', {'post': post})

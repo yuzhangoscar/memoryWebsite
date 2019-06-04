@@ -8,9 +8,6 @@ def post_list(request):
 	}
 	return render(request, 'blog/post/list.html', context)
 
-def about(request):
-	return render(request, 'blog/about.html', {'title':'about about'})
-
 def post_detail(request, year, month, day, post):
 	post = get_object_or_404(Post, slug=post,
 		status='published',

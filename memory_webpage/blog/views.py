@@ -3,10 +3,7 @@ from .models import Post
 
 def post_list(request):
 	posts = Post.published.all()
-	context = {
-	    'posts': posts
-	}
-	return render(request, 'blog/post/list.html', context)
+	return render(request, 'blog/post/list.html', {'posts': posts})
 
 def post_detail(request, year, month, day, post):
 	post = get_object_or_404(Post, slug=post,
